@@ -29,10 +29,10 @@ const makeTables = async(pool, sql) => {
 
 //db
 const dbOptions = {
-	host: "localhost",
-	user: "root",
-	password: "root",
-	database: "exptest",
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_DATABASE,
 	connectionLimit: 50
 }
 
