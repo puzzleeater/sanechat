@@ -1,0 +1,14 @@
+<input type="url" id="imageUrl" placeholder="link to your profile image">
+<button id="setImage">SET IMAGE</button>
+
+<% if(user.image) { %>
+	<image src="<%=user.image%>">
+<% } %>
+
+<div id="chatroom"></div>
+<textarea id="message" placeholder="write your message here"></textarea>
+<button id="send">SEND</button>
+<input type="text" id="room" placeholder="which room to join">
+<button id="join">JOIN</button>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/index.js" type="text/javascript"></script>
