@@ -4,12 +4,12 @@ const mysql = require("mysql2");
 
 //store
 const dbOptions = {
-	host: "localhost",
-	user: "root",
-	password: "root",
-	database: "exptest",
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_DATABASE,
 	connectionLimit: 50
-};
+}
 
 const sessionStore = new mysqlStore(dbOptions);
 //store
