@@ -68,7 +68,7 @@ app.post("/signin", (req,res)=>{
 			return;
 		});
 	} else { return res.setHeader("location", "/").status(301).send(); }
-	getUser(user).then(result=>{
+	/*getUser(user).then(result=>{
 		if(user) {
 			req.session.user = result;
 			req.session.save(err=>{
@@ -77,7 +77,7 @@ app.post("/signin", (req,res)=>{
 		} else {
 			res.setHeader("location", "/").status(301).send();
 		}
-	}).catch(err=>{ res.setHeader("location", "/").status(301).send(); });
+	}).catch(err=>{ res.setHeader("location", "/").status(301).send(); });*/
 });
 
 app.get("/clear", (req,res)=>{
@@ -110,21 +110,22 @@ io.on("connection", (socket)=>{
 	if(!user) {
 		socket.emit("message", "You are not logged in, Log in first!"); socket.disconnect();
 	} else {
-		getMessages().then(messages=>{
+		/*getMessages().then(messages=>{
 			for(let i = messages.length-1; i >= 0; i--) {
 				let message = messages[i];
 				socket.emit("message", message.message, message.username, message.msg_id, message.user_id);
 			}
-		}).catch(errx=>{console.log(errx)});
+		}).catch(errx=>{console.log(errx)});*/
 		
 		socket.on("disconnect", ()=>{
 			io.emit("message", `User ${user.username} disconnected!`, "SYSTEM");
 		});
 		socket.on("message", (message)=>{
-			createMessage(user, message).then(result=>{
+			/*createMessage(user, message).then(result=>{
 				//                 message, username, message id, user id
 				io.emit("message", message, user.username, result, user.id);
-			}).catch(err=>{console.log(err)});
+			}).catch(err=>{console.log(err)});*/
+			io.emit("message", message, user.username, result, user.id);
 		});
 		
 		socket.on("image", url=>{
