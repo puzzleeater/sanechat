@@ -75,9 +75,13 @@ app.get("/chat", (req,res)=>{
 		res.status(200).render("chat", {user});
 	}
 });
+//for test
 app.get("/test/:id", (req,res)=>{
 	const {id} = req.params;
 	res.status(200).send(id);
+});
+app.get("/users", (req,res)=>{
+	const users = getUsers();
 });
 //app
 
