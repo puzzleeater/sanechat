@@ -59,13 +59,14 @@ app.post("/signin", (req,res)=>{
 	const {email, password} = req.body;
 	const user = {email,password};
 	let findTmp = tmpUsers.find((userx, index)=>userx.email==email&&userx.password==password);
+	console.log(findTmp, "zing");
 	if(findTmp) {
 		req.session.user = findTmp;
 		req.session.save(err=>{
 			res.status(301).setHeader("location", "/chat").send();
 			return;
 		});
-	}
+	} return res.status(301).setHeader("location", "/").send();
 	getUser(user).then(result=>{
 		if(user) {
 			req.session.user = result;
