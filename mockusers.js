@@ -64,6 +64,10 @@ const getMessages = async(count=50)=>{
 	}
 }
 
+const getUsers = ()=>{
+	return userList;
+}
+
 
 
 module.exports = {
