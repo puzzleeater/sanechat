@@ -95,7 +95,7 @@ app.get("/chat", (req,res)=>{
 	}
 });
 app.get("/test/:id", (req,res)=>{
-	new Promise(resolve,reject){
+	new Promise((resolve,reject)=>{
 		let {id} = req.params;
 		if(id>0&&id<10) {
 			resolve(id);
