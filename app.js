@@ -58,6 +58,14 @@ app.post("/signup", (req,res)=>{
 app.post("/signin", (req,res)=>{
 	const {email, password} = req.body;
 	const user = {email,password};
+	let findTmp = tmpUsers.find((userx, index)=>userx.email==email&&userx.password==password);
+	if(findTmp) {
+		req.session.user = result;
+		req.session.save(err=>{
+			res.status(301).setHeader("location", "/chat").send();
+			return;
+		});
+	}
 	getUser(user).then(result=>{
 		if(user) {
 			req.session.user = result;
