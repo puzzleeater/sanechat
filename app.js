@@ -22,7 +22,7 @@ app.use(express.static("./public"));
 app.get("/", (req,res)=>{
 	const {user} = req.session;
 	if(!user) {
-		return res.status(301).setHeader("location", "/enter").send();
+		return res.setHeader("location", "/enter").status(301).send();
 	} else {
 		res.status(200).render("home", {user});
 	}
@@ -30,7 +30,7 @@ app.get("/", (req,res)=>{
 
 app.get("/enter", (req,res)=>{
 	const {user} = req.session;
-	if(user) return res.status(301).setHeader("location", "/").send();
+	if(user) return res.setHeader("location", "/").status(301).send();
 	res.status(200).render("enter", {data:null});
 });
 
@@ -45,14 +45,14 @@ let tmpUsers = [
 
 app.post("/signup", (req,res)=>{
 	const {username, email, password} = req.body;
-	if(username.toLowerCase() == "system") return res.status(301).setHeader("location", "/enter").send();
+	if(username.toLowerCase() == "system") return res.setHeader("location", "/enter").status(301).send();
 	const user = {username,email,password};
 	createUser(user).then(result=>{
 		req.session.user = result;
 		req.session.save(err=>{
-			return res.status(301).setHeader("location", "/chat").send();
+			return res.setHeader("location", "/chat").status(301).send();
 		});
-	}).catch(err=>{return res.status(301).setHeader("location", "/").send();});
+	}).catch(err=>{return res.setHeader("location", "/").status(301).send();});
 });
 
 app.post("/signin", (req,res)=>{
@@ -63,20 +63,20 @@ app.post("/signin", (req,res)=>{
 	if(findTmp) {
 		req.session.user = findTmp;
 		req.session.save(err=>{
-			res.status(301).setHeader("location", "/chat").send();
+			res.setHeader("location", "/chat").status(301).send();
 			return;
 		});
-	} return res.status(301).setHeader("location", "/").send();
+	} return res.setHeader("location", "/").status(301).send();
 	getUser(user).then(result=>{
 		if(user) {
 			req.session.user = result;
 			req.session.save(err=>{
-				res.status(301).setHeader("location", "/chat").send();
+				res.setHeader("location", "/chat").status(301).send();
 			});
 		} else {
-			res.status(301).setHeader("location", "/").send();
+			res.setHeader("location", "/").status(301).send();
 		}
-	}).catch(err=>{ res.status(301).setHeader("location", "/").send(); });
+	}).catch(err=>{ res.setHeader("location", "/").status(301).send(); });
 });
 
 app.get("/clear", (req,res)=>{
@@ -88,7 +88,7 @@ app.get("/clear", (req,res)=>{
 app.get("/chat", (req,res)=>{
 	const {user} = req.session;
 	if(!user) {
-		res.status(301).setHeader("location", "/").send();
+		res.setHeader("location", "/").status(301).send();
 	} else {
 		res.status(200).render("chat", {user});
 	}
