@@ -63,7 +63,7 @@ const getMessages = async(count=50)=>{
 		return [];
 	}
 }
-
+//for testing
 const getUsers = ()=>{
 	return userList;
 }
@@ -74,6 +74,7 @@ module.exports = {
 	createUser,
 	getUser,
 	createMessage,
-	getMessages
+	getMessages,
+	getUsers
 }
 
