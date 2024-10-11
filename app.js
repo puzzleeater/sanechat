@@ -94,6 +94,20 @@ app.get("/chat", (req,res)=>{
 		res.status(200).render("chat", {user});
 	}
 });
+app.get("/test/:id", (req,res)=>{
+	new Promise(resolve,reject)=>{
+		let {id} = req.params;
+		if(id>0&&id<10) {
+			resolve(id);
+		} else {
+			reject("Failed");
+		}
+	}).then(result => {
+		res.status(200).send("<h1>Successful!</h1>");
+	}).catch(err => {
+		res.status(404).send("<h1>Failed!</h1>")
+	});
+});
 //app
 
 //io
