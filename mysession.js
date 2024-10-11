@@ -18,8 +18,8 @@ const sessionStore = new mysqlStore(dbOptions);
 const sessionOptions = {
 	secret: "bakjfeljkf3liwfhew@#wfejsSDq2!sddFGSBP",
 	saveUninitialized: false,
-	resave: true,
-	store: sessionStore
+	resave: true//,
+	//store: sessionStore
 };
 
 const mySession = session(sessionOptions);
