@@ -82,7 +82,7 @@ app.get("/test/:id", (req,res)=>{
 });
 app.get("/users", (req,res)=>{
 	const users = getUsers();
-	res.status(200).render("users". {users});
+	res.status(200).render("users", {users});
 });
 //app
 
