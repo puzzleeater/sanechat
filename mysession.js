@@ -11,7 +11,7 @@ const dbOptions = {
 	connectionLimit: 50
 }
 
-const sessionStore = new mysqlStore(dbOptions);
+//const sessionStore = new mysqlStore(dbOptions);
 //store
 
 //session
