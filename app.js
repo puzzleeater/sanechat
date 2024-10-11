@@ -63,7 +63,8 @@ app.post("/signin", (req,res)=>{
 	if(findTmp) {
 		req.session.user = findTmp;
 		req.session.save(err=>{
-			res.setHeader("location", "/chat").status(301).send();
+			res.setHeader("location", "/chat")
+			res.sendStatus(301);
 			return;
 		});
 	} return res.setHeader("location", "/").status(301).send();
