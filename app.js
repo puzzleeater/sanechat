@@ -125,7 +125,7 @@ io.on("connection", (socket)=>{
 				//                 message, username, message id, user id
 				io.emit("message", message, user.username, result, user.id);
 			}).catch(err=>{console.log(err)});*/
-			io.emit("message", message, user.username, result, user.id);
+			io.emit("message", message, user.username, 0/*result*/, user.id);
 		});
 		
 		socket.on("image", url=>{
