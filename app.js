@@ -43,7 +43,7 @@ app.post("/signup", (req,res)=>{
 		req.session.save(err=>{
 			return res.status(301).setHeader("location", "/chat").send();
 		});
-	}).catch(err=>{return res.status(301).setHeader("location", "/").send();});
+	}).catch(err=>{console.log(e, "fucked!"); return res.status(301).setHeader("location", "/").send();});
 });
 
 app.post("/signin", (req,res)=>{

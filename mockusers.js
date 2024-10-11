@@ -7,12 +7,17 @@ let lastMsgId = 0;
 const createUser = async(user)=>{
 	try {
 		let result = await new Promise((resolve,reject)=>{
-			const found = userList.find((v,i)=>(v.email==user.email&&v.username==user.username));
+			const found = userList.find((v,i)=>(v.email==user.email&&v.username==user.username&&v.password==user.password));
 			if(!found) {
-				user.id = lastId++;
+				user.id = lastUserId++;
 				userList.push(user);
+				console.log(found, "not found");
+				console.log(user);
+				console.log(userList);
 				resolve(user);
 			} else {
+				console.log(found, "found");
+				console.log(userList);
 				resolve(null);
 			}
 		});
@@ -54,7 +59,7 @@ const createMessage = async(user, message)=>{
 const getMessages = async(count=50)=>{
 	try {
 		let results = await new Promise((resolve,reject)=>{
-			let messages = msgList.split(count);
+			let messages = msgList.length>50?msgList.slice(count):msgList;
 			resolve(messages);
 		});
 		return results;
