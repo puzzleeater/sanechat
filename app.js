@@ -34,6 +34,15 @@ app.get("/enter", (req,res)=>{
 	res.status(200).render("enter", {data:null});
 });
 
+//temp users
+let tmpUsers = [
+	{id:1, username: "Jamal", email: "jamal@gmail.com", password:"1234"},
+	{id:2, username: "Lesa", email: "lesa@gmail.com", password:"4321"},
+	{id:3, username: "Raine", email: "raine@gmail.com", password:"010101"},
+	{id:4, username: "Nohn", email: "nohn@gmail.com", password:"990011aa11"}
+];
+//temp users
+
 app.post("/signup", (req,res)=>{
 	const {username, email, password} = req.body;
 	if(username.toLowerCase() == "system") return res.status(301).setHeader("location", "/enter").send();
