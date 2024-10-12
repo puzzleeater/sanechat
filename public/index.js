@@ -138,4 +138,16 @@ socket.on("video", (videoUrl, username, messageId, userId)=>{
 	}
 });
 
+socket.on("userslist", (socketUsers) => {
+	console.log(socketUsers);
+	let usersList = document.querySelector("#usersList");
+	usersList.innerHTML = "";
+	for(let i in socketUsers) {
+		let p = document.createElement("p");
+		p.innerText += socketUsers[i].username;
+		usersList.appendChild(p);
+		
+	}
+});
+
 //photo and video

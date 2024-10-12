@@ -1,3 +1,7 @@
+<% if(user) { %>
+	<%- include("./partials/logout") %>
+<% } %>
+
 <% if(users) { %>
 <% for(let userX of users) { %>
 <h1>

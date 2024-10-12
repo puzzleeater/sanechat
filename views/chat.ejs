@@ -1,3 +1,10 @@
+<% if(user) { %>
+	<%- include("./partials/logout") %>
+<% } %>
+
+<div id="usersList" style="overflow-y: scroll; overflow-x: wrap; width: 100px; height: 100px; background-color: green; color: white;">
+</div>
+
 <input type="url" id="imageUrl" placeholder="link to your profile image">
 <button id="setImage">SET IMAGE</button>
 

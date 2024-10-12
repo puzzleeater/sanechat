@@ -30,7 +30,7 @@ const createUser = async(user)=>{
 const getUser = async(user)=>{
 	try {
 		let result = await new Promise((resolve,reject)=>{
-			let found = userList.find((v,i)=>(v.username==user.username&&v.email==user.email&&v.password==user.password));
+			let found = userList.find((v,i)=>(v.email==user.email&&v.password==user.password));
 			if(found) {
 				resolve(found);
 			} else {

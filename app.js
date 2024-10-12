@@ -50,6 +50,7 @@ app.post("/signin", (req,res)=>{
 	const {email, password} = req.body;
 	const user = {email,password};
 	getUser(user).then(result=>{
+		console.log(result);
 		if(user) {
 			req.session.user = result;
 			req.session.save(err=>{
@@ -81,8 +82,9 @@ app.get("/test/:id", (req,res)=>{
 	res.status(200).send(id);
 });
 app.get("/users", (req,res)=>{
+	const {user} = req.session;
 	const users = getUsers();
-	res.status(200).render("users", {users});
+	res.status(200).render("users", {users, user});
 });
 
 app.get("/messages", (req,res)=>{
@@ -114,11 +116,22 @@ const sessWrapper = (socket, next) => {
 io.use(sessWrapper);
 //io sess
 
+let connectedUsers = {};
+let onlineUsers = {};
+
 io.on("connection", (socket)=>{
 	const {user} = socket.request.session;
 	if(!user) {
 		socket.emit("message", "You are not logged in, Log in first!"); socket.disconnect();
 	} else {
+		if(!connectedUsers[""+user.id] || connectedUsers[""+user.id].length <= 0) {
+			//io.emit("message", `User ${user.username} connected!`, "SYSTEM");
+			connectedUsers[""+user.id] = [socket.id];
+			onlineUsers[""+user.id] = {id:user.id, username:user.username};
+			io.emit("userslist", onlineUsers);
+		} else {
+			connectedUsers[""+user.id].push(socket.id);
+		}
 		getMessages().then(messages=>{
 			for(let i = 0; i < messages.length; i++) {
 				let message = messages[i];
@@ -134,7 +147,19 @@ io.on("connection", (socket)=>{
 		}).catch(errx=>{console.log(errx)});
 		
 		socket.on("disconnect", ()=>{
-			io.emit("message", `User ${user.username} disconnected!`, "SYSTEM");
+			//io.emit("message", `User ${user.username} disconnected!`, "SYSTEM");
+			console.log("before",connectedUsers[""+user.id]);
+			connectedUsers[""+user.id] = connectedUsers[""+user.id].filter((v,i)=>v!=socket.id);
+			console.log(socket.id);
+			console.log("after", connectedUsers[""+user.id]);
+			if(!connectedUsers[""+user.id] || connectedUsers[""+user.id].length <= 0) {
+				console.log("cocococococcooooo");
+				delete onlineUsers[""+user.id];
+				io.emit("userslist", onlineUsers);
+				console.log("*****************************");
+				console.log(onlineUsers, onlineUsers[""+user.id], "hoooooeee");
+				console.log("*****************************");
+			}
 		});
 		socket.on("message", (message)=>{
 			createMessage(user, message).then(result=>{
@@ -163,8 +188,6 @@ io.on("connection", (socket)=>{
 			}).catch(err=>{console.log(err)});
 		});
 		//photo and video
-		
-		io.emit("message", `User ${user.username} connected!`, "SYSTEM");
 	}
 });
 //io
