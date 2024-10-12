@@ -86,7 +86,7 @@ socket.on("photo", (photoUrl, username, messageId, userId)=>{
 socket.on("video", (videoUrl, username, messageId, userId)=>{
 	console.log("video shared");
 	//reg
-	let iframeRegex = /https:\/\/www.youtube.com/gi; // /^[\<]iframe.*[\<][\/]iframe[\>]/gi;
+	let iframeRegex = /^[\<]iframe.*[\<][\/]iframe[\>]/gi; // /https:\/\/www.youtube.com/gi;
 	let arr = iframeRegex.exec(videoUrl);
 	let embedThing = null;
 	if(!arr || arr.length < 1) {
@@ -110,7 +110,7 @@ socket.on("video", (videoUrl, username, messageId, userId)=>{
 		b.innerText = username + " ";
 		p.appendChild(b);
 
-		
+		/*
 		//video
 		let vid = document.createElement("video");
 		vid.width = "560";
@@ -124,6 +124,8 @@ socket.on("video", (videoUrl, username, messageId, userId)=>{
 		vid.appendChild(vidSrc);
 		p.appendChild(vid);
 		//video
+		*/
+		p.innerHTML += videoUrl;
 		
 		let chatroom = document.querySelector("#chatroom");
 		chatroom.appendChild(p);
