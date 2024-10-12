@@ -105,6 +105,6 @@ module.exports = {
 	createUser,
 	getUser,
 	createMessage,
-	getMessage,
+	getMessages,
 	getUsers
 }
