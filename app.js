@@ -3,7 +3,7 @@ const {createServer} = require("http");
 const {Server} = require("socket.io");
 const nocache = require("nocache");
 const session = require("./mysession.js");
-const {createUser, getUser, createMessage, getMessages, getUsers} = require("./mockusers.js");
+const {createUser, getUser, createMessage, getMessages, getUsers} = require("./mystorage.js");
 
 const port = process.env.PORT || 80;
 
@@ -83,8 +83,11 @@ app.get("/test/:id", (req,res)=>{
 });
 app.get("/users", (req,res)=>{
 	const {user} = req.session;
-	const users = getUsers();
-	res.status(200).render("users", {users, user});
+	getUsers().then(result=>{
+		res.status(200).render("users", {users:result, user:user});
+	}).catch(err=>{
+		res.sendStatus(404);
+	});
 });
 
 app.get("/messages", (req,res)=>{
