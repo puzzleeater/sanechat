@@ -86,7 +86,7 @@ socket.on("photo", (photoUrl, username, messageId, userId)=>{
 socket.on("video", (videoUrl, username, messageId, userId)=>{
 	console.log("video shared");
 	//reg
-	let iframeRegex = /https:\/\/you/gi; // /^[\<]iframe.*[\<][\/]iframe[\>]/gi;
+	let iframeRegex = /https:\/\/www.youtube.com/gi; // /^[\<]iframe.*[\<][\/]iframe[\>]/gi;
 	let arr = iframeRegex.exec(videoUrl);
 	let embedThing = null;
 	if(!arr || arr.length < 1) {
