@@ -90,6 +90,19 @@ app.get("/messages", (req,res)=>{
 		res.status(200).json(messages);
 	}).catch(err=>{res.sendStatus(404);});
 });
+
+app.get("/logout", (req,res)=>{
+	const {user} = req.session;
+	if(!user) {
+		res.status(301).setHeader("location", "/").send();
+	} else {
+		req.session.user = undefined;
+		req.session.destroy((err)=>{
+			console.log("logged out");
+			res.status(301).setHeader("location", "/").send();
+		});
+	}
+});
 //app
 
 //io
