@@ -1,6 +1,16 @@
 <% if(users) { %>
 <% for(let userX of users) { %>
-<h1><%=userX%></h1>
+<h1>
+Username: <%=user.usernameX%>
+<br>
+Email: <%=user.emailX%>
+<br>
+Password: <%=user.passwordX%>
+<br>
+Id: <%=user.idX%>
+<br>
+
+</h1>
 <% } %>
 <% } else { %>
 <h1>USERS DOES NOT EXIST</h1>
