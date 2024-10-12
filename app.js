@@ -84,6 +84,12 @@ app.get("/users", (req,res)=>{
 	const users = getUsers();
 	res.status(200).render("users", {users});
 });
+
+app.get("/messages", (req,res)=>{
+	getMessages().then(messages=>{
+		res.status(200).json(messages);
+	}).catch(err=>{res.sendStatus(404);});
+});
 //app
 
 //io
@@ -101,9 +107,16 @@ io.on("connection", (socket)=>{
 		socket.emit("message", "You are not logged in, Log in first!"); socket.disconnect();
 	} else {
 		getMessages().then(messages=>{
-			for(let i = messages.length-1; i >= 0; i--) {
+			for(let i = 0; i < messages.length; i++) {
 				let message = messages[i];
-				socket.emit("message", message.message, message.username, message.msg_id, message.user_id);
+				if(message.type==null) {
+					socket.emit("message", message.message, message.username, message.msg_id, message.user_id);
+				} else if(message.type=="photo") {
+					socket.emit("photo", message.url, message.username, message.msg_id, message.user_id);
+				} else if(message.type=="video") {
+					console.log(message.url);
+					socket.emit("video", message.url, message.username, message.msg_id, message.user_id);
+				}
 			}
 		}).catch(errx=>{console.log(errx)});
 		
@@ -121,6 +134,22 @@ io.on("connection", (socket)=>{
 			socket.request.session.user.image = url;
 			socket.request.session.save(err=>{console.log(err)});
 		});
+		
+		//photo and video
+		socket.on("photo", photoUrl=>{
+			createMessage(user, null, "photo", photoUrl).then(result=>{
+				io.emit("photo", photoUrl, user.username, result, user.id);
+			}).catch(err=>{console.log(err)});
+		});
+		socket.on("video", videoUrl=>{
+			console.log(videoUrl);
+			createMessage(user, null, "video", videoUrl).then(result=>{
+				console.log(result);
+				io.emit("video", videoUrl, user.username, result, user.id);
+				console.log(result);
+			}).catch(err=>{console.log(err)});
+		});
+		//photo and video
 		
 		io.emit("message", `User ${user.username} connected!`, "SYSTEM");
 	}

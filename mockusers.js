@@ -43,10 +43,10 @@ const getUser = async(user)=>{
 	}
 }
 
-const createMessage = async(user, message)=>{
+const createMessage = async(user, message, type=null, url=null)=>{
 	try {
 		let result = await new Promise((resolve,reject)=>{
-			let msg = {user_id:user.id, msg_id:lastMsgId, username:user.username, message:message};
+			let msg = {user_id:user.id, msg_id:lastMsgId++, username:user.username, message:message, type:type, url:url};
 			msgList.push(msg);
 			resolve(msg);
 		});
@@ -68,6 +68,7 @@ const getMessages = async(count=50)=>{
 		return [];
 	}
 }
+
 //for testing
 const getUsers = ()=>{
 	return userList;
