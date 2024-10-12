@@ -125,7 +125,12 @@ socket.on("video", (videoUrl, username, messageId, userId)=>{
 		p.appendChild(vid);
 		//video
 		*/
-		p.innerHTML += videoUrl;
+		
+		let divBox = document.createElement("div");
+		divBox.width = "560";
+		divBox.height = "315";
+		divBox.innerHTML += videoUrl;
+		p.appendChild(divBox);
 		
 		let chatroom = document.querySelector("#chatroom");
 		chatroom.appendChild(p);
