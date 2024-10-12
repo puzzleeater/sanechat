@@ -116,6 +116,7 @@ socket.on("video", (videoUrl, username, messageId, userId)=>{
 		vid.width = "560";
 		vid.height = "315";
 		vid.controls = true;
+		vid.autoplay = true;
 		
 		let vidSrc = document.createElement("source");
 		vidSrc.type = "video/mp4";
