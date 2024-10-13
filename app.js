@@ -136,7 +136,7 @@ io.on("connection", (socket)=>{
 			connectedUsers[""+user.id].push(socket.id);
 		}
 		getMessages().then(messages=>{
-			for(let i = messages.length; i >= 0; i--) {
+			for(let i = messages.length-1; i >= 0; i--) {
 				let message = messages[i];
 				if(message.type==null) {
 					socket.emit("message", message.message, message.username, message.msg_id, message.user_id);
